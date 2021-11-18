@@ -1,0 +1,4 @@
+18/11/2021
+1º Crear proyecto Git-GitHub
+2º Escribir método crear_bbdd()
+3º 
