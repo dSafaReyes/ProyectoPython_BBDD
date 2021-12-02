@@ -31,3 +31,7 @@ def get_ciudad_ofertas_paginas(string):
     ciudad = lista_palabras_title[-1]
     n_paginas = redondear_arriba(n_ofertas/30)
     return ciudad, n_ofertas, n_paginas
+
+def to_fecha_mariadb(string):
+    lista_fecha = string.split("/")[::-1]
+    return "-".join(lista_fecha)
