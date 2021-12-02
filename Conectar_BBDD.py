@@ -23,6 +23,7 @@ class Conectar_BBDD:
             f"constraint {nombre_tabla}_pk primary key (id)"
             f")"
         )
+        mycursor.close()
         return True
 
     def insertar_datos(self, nombre_tabla, lista_datos):
@@ -31,18 +32,30 @@ class Conectar_BBDD:
                 "(nombre_puesto, nombre_empresa, fecha_empleo, modo_remoto, tipo_jornada, tipo_contrato, salario) "
                 "VALUES (%s, %s, %s, %s, %s, %s, %s)")
         mycursor.execute(tabla, lista_datos)
+        mycursor.close()
         return True
 
-    def consulta(self, nombre_tabla):
+    def consultar_todos(self, nombre_tabla):
         mycursor = self.cursor_on
         query = (f"SELECT * FROM {nombre_tabla}")
-        return mycursor.execute(query)
+        mycursor.execute(query)
+        return mycursor.fetchall()
+        # for id, nombre_puesto, nombre_empresa, fecha_empleo, modo_remoto, tipo_jornada, tipo_contrato, salario in lista_consulta:
+        #     yield id, nombre_puesto, nombre_empresa, fecha_empleo, modo_remoto, tipo_jornada, tipo_contrato, salario
+
+    def consultar(self, nombre_tabla, c_ordered, asc, *columnas):
+        mycursor = self.cursor_on
+        values = ", ".join(*columnas)
+        query = (f"SELECT {values} FROM {nombre_tabla} ORDER BY {c_ordered} {asc}")
+        mycursor.execute(query)
+        return mycursor.fetchall()
 
     def eliminar_bbdd(self):
         mycursor = self.cursor_on
         mycursor.execute(f"DROP DATABASE {self.nombre_bbdd}")
         mycursor.close()
         return True
+
 
 
 def crear_bbdd(nombre_bbdd):
