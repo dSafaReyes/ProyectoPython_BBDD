@@ -50,6 +50,12 @@ class Conectar_BBDD:
         mycursor.execute(query)
         return mycursor.fetchall()
 
+    def insertar_registro(self):
+        ...
+
+    def borrar_registro(self):
+        ...
+
     def eliminar_bbdd(self):
         mycursor = self.cursor_on
         mycursor.execute(f"DROP DATABASE {self.nombre_bbdd}")
